@@ -1,0 +1,24 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: vote
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - host: site.vote.com
+    http:
+      paths:
+      - backend:
+          serviceName: vote
+          servicePort: 80
+          
+  - host: site.result.com
+    http:
+      paths:      
+      - backend:
+          serviceName: result
+          servicePort: 80
+        
+

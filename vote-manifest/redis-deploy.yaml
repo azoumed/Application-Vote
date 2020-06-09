@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      tier: back
+      role: redis
+  minReadySeconds: 10
+  template:
+    metadata:
+      labels:
+        app: redis
+        role: redis
+        tier: back
+    spec:
+      containers:
+      - image: timdouine/redis:1.0
+        imagePullPolicy: Always
+        name: redis
+        ports:
+        - containerPort: 6379
+          protocol: TCP
+      restartPolicy: Always

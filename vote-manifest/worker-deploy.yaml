@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: worker
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 20
+  template:
+    metadata:
+      name: worker
+      labels:
+        app: java
+        role: worker
+    spec:
+      containers:
+        - name: app
+          image: timdouine/vote-worker:1.0

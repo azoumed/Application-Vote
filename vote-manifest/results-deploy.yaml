@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: result
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 1
+  revisionHistoryLimit: 4
+  paused: false
+  replicas: 2
+  minReadySeconds: 20
+  selector:
+    matchLabels:
+      role: result
+  template:
+    metadata:
+      name: vote
+      labels:
+        app: python
+        role: result
+    spec:
+      containers:
+        - name: app
+          image: timdouine/vote-result:1.0
+          ports:
+            - containerPort: 80
+              protocol: TCP
